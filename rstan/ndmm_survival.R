@@ -1,11 +1,9 @@
 ################################################################################
 # Analysis of Newly Diagnosed Multiple Myeloma PFS using flexible M-splines on 
 # the baseline hazard with Multilevel Network Meta-Regression
-#   - David Phillippo, University of Bristol
 ################################################################################
 
-
-library(dplyr)
+library(dplyr)     # For data manipulation and plotting
 library(readr)
 library(tidyr)
 library(purrr)
@@ -170,7 +168,6 @@ agd_covs <- ipd_all %>% filter(studyf %in% c("Morgan2012", "Jackson2019")) %>%
             # Use estmeansd to calculate mean and sd
             setNames(as_tibble(unclass(estmeansd::bc.mean.sd(age_min, age_iqr_l, age_median, age_iqr_h, age_max, n = sample_size))[c("est.mean", "est.sd")]),
                      c("age_mean", "age_sd")),
-            # .true_age_mean = mean(age), .true_age_sd = sd(age),
             iss_stage3 = mean(iss_stage3),
             response_cr_vgpr = mean(response_cr_vgpr),
             male = mean(male))

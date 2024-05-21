@@ -1,9 +1,8 @@
 ################################################################################
 # Simulated parametric survival example using the multinma package
-#   - David Phillippo, University of Bristol
 ################################################################################
 
-library(dplyr)
+library(dplyr)    # For data manipulation and plotting
 library(tidyr)
 library(ggplot2)
 
@@ -346,24 +345,6 @@ weib_unadj_IC <- nma(sim_net_IPD,
 
 weib_unadj_IC
 
-# # To reflect real-world use, we calculate the IC estimate by hand using the 
-# # variance formula and normal approximation for credible intervals
-# weib_unadj_IC_est <- 
-#   relative_effects(weib_unadj_IC) %>% 
-#   as_tibble() %>% 
-#   mutate(var = sd^2) %>% 
-#   summarise(parameter = "d[C vs. B]",
-#             est = diff(mean),
-#             var = sum(var),
-#             lower = est + qnorm(0.025)*sqrt(var),
-#             upper = est + qnorm(0.975)*sqrt(var))
-# 
-# weib_unadj_IC_est
-# 
-# # Doing the IC directly using posterior samples gives a very similar result
-# # (but wouldn't be possible in a real scenario using published estimates)
-# relative_effects(weib_unadj_IC, all_contrasts = TRUE)
-
 
 # Compare estimates with true values --------------------------------------
 
@@ -378,8 +359,6 @@ par_lookup <- tribble(
   "beta[x3:.trtclass2]", "trtclass:x3", "EM Interaction", "beta[2*';'~3]",
   "d[B]", "trtB", "Treatment Effect", "gamma[B]",
   "d[C]", "trtC", "Treatment Effect", "gamma[C]",
-  # "scale[AB]", "scaleAB", "Scale",
-  # "scale[AC]", "scaleAC", "Scale",
   "shape[AB]", "shapeAB", "Shape", "nu[AB]",
   "shape[AC]", "shapeAC", "Shape", "nu[AC]"
 )
@@ -494,23 +473,20 @@ subfmt <- function(subgroup, by = rep_len(1, length(subgroup))) {
 weib_est_dat %>% 
   mutate(term_typef = ordered(term_type, 
                               levels = c("Treatment Effect", "Prognostic Effect",
-                                         "EM Interaction", "Shape")),# "Scale")),
+                                         "EM Interaction", "Shape")),
          model_termf = ordered(model_term,
                                levels = c("trtB", "trtC",
                                           "x1", "x2", "x3",
                                           "trtclass:x1", "trtclass:x2", "trtclass:x3",
                                           "shapeAB", "shapeAC"),
-                                          # "scaleAB", "scaleAC"),
                                labels = c("$\\gamma_B$", "$\\gamma_C$",
                                           "$\\beta_{1;1}$", "$\\beta_{1;2}$", "$\\beta_{1;3}$",
                                           "$\\beta_{2;1}$", "$\\beta_{2;2}$", "$\\beta_{2;3}$",
                                           "$\\nu_{AB}$", "$\\nu_{AC}$")),
-                                          #"$\\alpha_{AB}$", "$\\alpha_{AC}$")),
          est_fmt = tabfmt(mean),
          ci_fmt = paste0("(", tabfmt(`2.5%`), ", ", tabfmt(`97.5%`), ")"),
          truth_fmt = tabfmt(truth)) %>% 
   pivot_longer(names_to = "stat", values_to = "stat_fmt", cols = c(est_fmt, ci_fmt)) %>% 
-  # select(-mean, -std.error, -`2.5%`, -`97.5%`, -truth) %>% 
   select(model:stat_fmt) %>% 
   group_by(stat) %>% 
   pivot_wider(names_from = model, values_from = stat_fmt) %>% 
@@ -541,20 +517,6 @@ weib_est_dat %>%
 
 # Survival estimates can be produced using the predict() function, and plotted
 # using the plot() method
-# p <- plot(predict(weib_MLNMR, type = "survival", times = seq(0, 1, by = 0.02)))
-#   
-# # Overlay KM data
-# kmdat <- mutate(kmdat, Study = studyf, Treatment = trtf)
-# p +
-#   geom_step(aes(x = time, y = estimate, colour = Treatment), linewidth = 0.15, data = kmdat) +
-#   geom_point(aes(x = time, y = estimate, colour = Treatment), stroke = 0.15, shape = 3, 
-#              data = filter(kmdat, n.censor >= 1)) +
-#   scale_colour_manual("Treatment", 
-#                       breaks = c("A", "B", "C"), 
-#                       values = trt_pal,
-#                       aesthetics = c("colour", "fill")) +
-#   theme_multinma(base_family = "Source Sans Pro") +
-#   theme(legend.position = "top", legend.box.spacing = unit(0, "lines"))
 
 plot(predict(weib_MLNMR, type = "survival", times = seq(0, 1, by = 0.02))) +
   # overlay KM data
@@ -588,15 +550,6 @@ weib_hrs <-
             label = paste0(.trtb, " vs. ", .trta),
             estimate = mean, `2.5%`, `97.5%`,
             model) %>% 
-  
-  # # Add in unadjusted IC
-  # bind_rows(
-  #   transmute(weib_unadj_IC_est,
-  #             label = "C vs. B",
-  #             estimate = est, `2.5%` = lower, `97.5%` = upper,
-  #             model = "Standard IC") %>% 
-  #     crossing(studyf = factor(c("AB", "AC")))
-  # ) %>% 
   
   # Add in true values
   bind_rows(

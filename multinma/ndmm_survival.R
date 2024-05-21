@@ -1,7 +1,6 @@
 ################################################################################
 # Analysis of Newly Diagnosed Multiple Myeloma PFS using flexible M-splines on 
 # the baseline hazard with Multilevel Network Meta-Regression
-#   - David Phillippo, University of Bristol
 ################################################################################
 
 # For data manipulation and plotting
@@ -31,9 +30,6 @@ showtext_auto()
 
 # Colour palettes
 trt_pal <- c(Pbo = "#113259", Len = "#865800", Thal = "#55A480")
-
-# Set seed
-# set.seed(54321)
 
 
 # Set up output directories -----------------------------------------------

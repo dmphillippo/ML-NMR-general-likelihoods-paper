@@ -3,7 +3,7 @@
 #   - David Phillippo, University of Bristol
 ################################################################################
 
-library(dplyr)
+library(dplyr)    # For data manipulation and plotting
 library(tidyr)
 library(purrr)
 library(ggplot2)
