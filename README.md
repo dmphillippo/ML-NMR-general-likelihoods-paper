@@ -1,19 +1,21 @@
-###############################################################################
-# Analysis code and data to accompany the manuscript:
-#
-#   Multilevel network meta-regression for general likelihoods: synthesis of 
-#   individual and aggregate data with applications to survival analysis
-#
-###############################################################################
+# Multilevel network meta-regression for general likelihoods
 
-This archive contains two sets of analysis code, one which implements the 
-analyses using the multinma R package, and another which calls Stan models 
-directly. We recommend following the multinma scripts for most analysis
-purposes; the latter may be useful for those wishing to further modify the 
-models beyond the level of customisation offered by the multinma package.
+This repository contains analysis code and data to accompany the manuscript:
+
+> Phillippo, D. M., Dias, S., Ades, A. E., Welton, N. J. (2024). "Multilevel
+> network meta-regression for general likelihoods: synthesis of individual and 
+> aggregate data with applications to survival analysis".
+> *arXiv*:[2401.12640](https://arxiv.org/abs/2401.12640).
 
 
-# Analyses using multinma
+Two sets of analysis code are provided, one which implements the analyses using
+the multinma R package, and another which calls Stan models directly. We 
+recommend following the multinma scripts for most analysis purposes; the 
+latter may be useful for those wishing to further modify the models beyond the
+level of customisation offered by the multinma package.
+
+
+## Analyses using multinma
 
 The folder `multinma` contains R code to recreate the analyses in the
 paper using the multinma R package:
@@ -27,7 +29,7 @@ paper using the multinma R package:
    data are included in the multinma R package.
 
 
-# Analyses using Stan directly
+## Analyses using Stan directly
 
 The folder `rstan` contains R code to recreate the analyses in the
 paper, setting up and calling Stan models directly via the rstan package:
