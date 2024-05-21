@@ -1,0 +1,7 @@
+.Rproj.user
+archive
+figures
+tables
+.Rhistory
+*.rds
+*.bak
