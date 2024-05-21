@@ -9,10 +9,11 @@ This repository contains analysis code and data to accompany the manuscript:
 
 
 Two sets of analysis code are provided, one which implements the analyses using
-the multinma R package, and another which calls Stan models directly. We 
-recommend following the multinma scripts for most analysis purposes; the 
-latter may be useful for those wishing to further modify the models beyond the
-level of customisation offered by the multinma package.
+the [multinma R package](https://dmphillippo.github.io/multinma/), and another 
+which calls Stan models directly. We recommend following the multinma scripts 
+for most analysis purposes; the latter may be useful for those wishing to 
+further modify the models beyond the level of customisation offered by the
+multinma package.
 
 
 ## Analyses using multinma
@@ -26,7 +27,9 @@ paper using the multinma R package:
 
  * `multinma/ndmm_survival.R` recreates the newly diagnosed multiple myeloma 
    example, fitting models with a flexible M-spline baseline hazard. Synthetic 
-   data are included in the multinma R package.
+   data are included in the multinma R package, along with a walkthrough 
+   [vignette](https://dmphillippo.github.io/multinma/articles/example_ndmm.html)
+   of this analysis.
 
 
 ## Analyses using Stan directly
